@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_material_padding">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/btn_activity_login_google_sign_in"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_activity_login_facebook"
         android:layout_width="match_parent"

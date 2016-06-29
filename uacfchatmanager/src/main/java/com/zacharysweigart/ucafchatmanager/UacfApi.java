@@ -10,7 +10,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 interface UacfApi {
     String BASE_URL = "https://damp-lake-90950.herokuapp.com/";

@@ -16,7 +16,6 @@ import com.zacharysweigart.uacfchat.chat.ChatActivity;
 import com.zacharysweigart.uacfchat.friendlist.FriendListActivity;
 import com.zacharysweigart.uacfchat.login.LoginActivity;
 import com.zacharysweigart.uacfchat.model.Chat;
-import com.zacharysweigart.uacfchat.util.SharedPreferenceManager;
 import com.zacharysweigart.ucafchatmanager.UacfChatManager;
 
 import java.util.List;
@@ -25,18 +24,15 @@ public class ChatListActivity extends BaseActivity implements ChatListNavigator 
 
     private ChatListPresenter chatListPresenter;
     private ChatListView chatListView;
-    private SharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPreferenceManager = new SharedPreferenceManager(this);
-
         chatListPresenter = new ChatListPresenter();
         chatListView = new ChatListView(this);
         chatListView.setChatListPresenter(chatListPresenter);
-        chatListPresenter.initialize(chatListView, this, sharedPreferenceManager);
+        chatListPresenter.initialize(chatListView, this);
 
         floatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_content_add));
         floatingActionButton.setOnClickListener(new View.OnClickListener() {

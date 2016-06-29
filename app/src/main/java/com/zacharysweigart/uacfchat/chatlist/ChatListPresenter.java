@@ -5,7 +5,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.zacharysweigart.uacfchat.model.Chat;
-import com.zacharysweigart.uacfchat.util.SharedPreferenceManager;
 
 public class ChatListPresenter {
     private ChatListView chatListView;
@@ -15,8 +14,7 @@ public class ChatListPresenter {
     public ChatListPresenter() {
     }
 
-    public void initialize(final ChatListView chatListView, ChatListNavigator chatListNavigator,
-                           SharedPreferenceManager sharedPreferenceManager) {
+    public void initialize(final ChatListView chatListView, ChatListNavigator chatListNavigator) {
         this.chatListView = chatListView;
         this.chatListNavigator = chatListNavigator;
         chatListRef = FirebaseDatabase.getInstance().getReference()

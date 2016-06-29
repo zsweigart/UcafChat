@@ -14,25 +14,29 @@ import retrofit2.Response;
 public class UacfChat {
 
     @VisibleForTesting
+    UacfConnection uacfConnection;
+    @VisibleForTesting
     String userName;
+    @VisibleForTesting
+    boolean canceled = false;
+
     private OrderedMessageList orderedMessageList;
     private MessageRefreshListener messageRefreshListener;
     private MessageSendListener messageSendListener;
-    @VisibleForTesting
-    UacfConnection uacfConnection;
 
     public UacfChat(String userName) {
         this.userName = userName;
         this.orderedMessageList = new OrderedMessageList();
+        uacfConnection = new UacfConnection();
         setMessageListListener();
     }
 
     public void startChat() {
-        uacfConnection = new UacfConnection();
+        canceled = false;
     }
 
     public void stopChat() {
-        uacfConnection = null;
+        canceled = true;
     }
 
     public void setMessageRefreshListener(MessageRefreshListener messageRefreshListener) {
@@ -50,12 +54,12 @@ public class UacfChat {
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if(response.isSuccessful()) {
                     message.setId(response.body().getId());
-                    if(messageSendListener != null) {
+                    if(!canceled && messageSendListener != null) {
                         messageSendListener.messageSent(message);
                     }
                 } else {
                     message.setError(response.errorBody().toString());
-                    if(messageSendListener != null) {
+                    if(!canceled && messageSendListener != null) {
                         messageSendListener.messageSendFailure(message);
                     }
                 }
@@ -64,7 +68,7 @@ public class UacfChat {
             @Override
             public void onFailure(Call<Message> call, Throwable t) {
                 message.setError(t.getMessage());
-                if(messageSendListener != null) {
+                if(!canceled && messageSendListener != null) {
                     messageSendListener.messageSendFailure(message);
                 }
             }
@@ -80,7 +84,7 @@ public class UacfChat {
 
             @Override
             public void onFailure(Call<List<Message>> call, Throwable t) {
-                if(messageRefreshListener != null) {
+                if(!canceled && messageRefreshListener != null) {
                     messageRefreshListener.messageRefreshFailure();
                 }
             }
@@ -91,14 +95,14 @@ public class UacfChat {
         orderedMessageList.setMessageListListener(new OrderedMessageList.MessageListListener() {
             @Override
             public void messageAdded(Message message) {
-                if(messageRefreshListener != null) {
+                if(!canceled && messageRefreshListener != null) {
                     messageRefreshListener.messageAdded(message);
                 }
             }
 
             @Override
             public void messageRemoved(Message message) {
-                if(messageRefreshListener != null) {
+                if(!canceled && messageRefreshListener != null) {
                     messageRefreshListener.messageRemoved(message);
                 }
             }

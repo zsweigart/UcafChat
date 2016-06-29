@@ -28,14 +28,14 @@ class OrderedMessageList {
      * This method will notify the list listener (if it exists) for whether messages have been
      * removed or added to the existing list.
      *
-     * @param newMessageList
+     * @param newMessageList The list of messages that should be contained when the method finishes
      */
     public void updateList(List<Message> newMessageList) {
         List<Message> messagesToRemove = new ArrayList<>();
         List<Message> messagesToAdd = new ArrayList<>();
 
-        if(newMessageList == null || newMessageList.size() == 0) {
-            for(Message message : messageList) {
+        if (newMessageList == null || newMessageList.size() == 0) {
+            for (Message message : messageList) {
                 if (messageListListener != null) {
                     messageListListener.messageRemoved(message);
                 }
@@ -44,16 +44,16 @@ class OrderedMessageList {
             return;
         }
 
-        for(Message message : messageList) {
-            if(!newMessageList.contains(message)) {
+        for (Message message : messageList) {
+            if (!newMessageList.contains(message)) {
                 messagesToRemove.add(message);
                 messageListListener.messageRemoved(message);
             }
         }
         messageList.removeAll(messagesToRemove);
 
-        for(Message message : newMessageList) {
-            if(!messageList.contains(message)) {
+        for (Message message : newMessageList) {
+            if (!messageList.contains(message)) {
                 messagesToAdd.add(message);
                 messageListListener.messageAdded(message);
             }

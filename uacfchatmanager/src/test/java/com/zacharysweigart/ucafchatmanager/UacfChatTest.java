@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 
 import retrofit2.Call;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -34,18 +35,21 @@ public class UacfChatTest {
     }
 
     @Test
-    public void startChat_setsConnection() {
-        uacfChat.startChat();
+    public void constructor_setsConnection() {
         assertThat(uacfChat.uacfConnection, notNullValue());
     }
 
     @Test
-    public void stopChat_whenChatStarted_clearsConnection() {
+    public void startChat_whenConstructed_setsCancelledToFalse() {
         uacfChat.startChat();
-        assertThat(uacfChat.uacfConnection, notNullValue());
-        uacfChat.stopChat();
-        assertThat(uacfChat.uacfConnection, nullValue());
+        assertThat(uacfChat.canceled, equalTo(false));
     }
 
+    @Test
+    public void stopChat_whenStarted_setsCancelledToTrue() {
+        uacfChat.startChat();
+        uacfChat.stopChat();
+        assertThat(uacfChat.canceled, equalTo(true));
+    }
 
 }

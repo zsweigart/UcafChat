@@ -15,27 +15,20 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 import com.zacharysweigart.uacfchat.R;
 import com.zacharysweigart.uacfchat.base.BaseActivity;
 import com.zacharysweigart.uacfchat.chatlist.ChatListActivity;
 import com.zacharysweigart.uacfchat.register.RegisterActivity;
-import com.zacharysweigart.uacfchat.util.SharedPreferenceManager;
 import com.zacharysweigart.ucafchatmanager.UacfChatManager;
 
 import butterknife.BindView;
@@ -43,10 +36,6 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private static final int RC_SIGN_IN = 10;
-
-    @BindView(R.id.btn_activity_login_google_sign_in)
-    SignInButton googleSignInButton;
     @BindView(R.id.btn_activity_login_facebook)
     LoginButton facebookSignInButton;
     @BindView(R.id.activity_login_email_edit)
@@ -60,10 +49,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-    private GoogleSignInOptions googleSignInOptions;
-    private GoogleApiClient googleApiClient;
     private CallbackManager callbackManager;
-    private SharedPreferenceManager sharedPreferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +60,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
 
         showProgress();
 
-        sharedPreferenceManager = new SharedPreferenceManager(this);
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -87,21 +72,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
                 }
             }
         };
-
-         googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.google_web_client_id))
-                .requestEmail()
-                .build();
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                googleSignIn();
-            }
-        });
 
         callbackManager = CallbackManager.Factory.create();
         facebookSignInButton.setReadPermissions("email", "public_profile", "user_friends");
@@ -136,7 +106,9 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
             }
         });
 
-        getSupportActionBar().setTitle(R.string.login_action_sign_in);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.login_action_sign_in);
+        }
     }
 
     @Override
@@ -156,18 +128,7 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result.isSuccess()) {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = result.getSignInAccount();
-                firebaseAuthWithGoogle(account);
-            } else {
-                // Google Sign In failed, update UI appropriately
-            }
-        } else {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void openChatList(FirebaseUser firebaseUser) {
@@ -203,24 +164,6 @@ public class LoginActivity extends BaseActivity implements GoogleApiClient.OnCon
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    private void googleSignIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            openChatList(task.getResult().getUser());
-                        }
-                    }
-                });
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
