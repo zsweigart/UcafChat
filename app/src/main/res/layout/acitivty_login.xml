@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_material_padding">
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_activity_login_google_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/btn_activity_login_facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_material_padding"/>
+
+    <EditText
+        android:id="@+id/activity_login_email_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/subhead"
+        android:layout_marginTop="@dimen/default_material_padding"
+        android:hint="@string/login_email_hint"
+        android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:id="@+id/activity_login_password_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/subhead"
+        android:layout_marginTop="@dimen/default_material_padding"
+        android:hint="@string/login_password_hint"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/btn_activity_login_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_default"
+        android:textSize="@dimen/subhead"
+        android:textColor="@color/textLightPrimary"
+        android:layout_marginTop="@dimen/default_material_padding"
+        android:text="@string/login_action_sign_in"/>
+
+    <Button
+        android:id="@+id/btn_activity_login_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_secondary"
+        android:textSize="@dimen/subhead"
+        android:textColor="@color/textLightPrimary"
+        android:text="@string/login_action_register"
+        android:layout_marginTop="@dimen/default_material_padding"/>
+
+</LinearLayout>

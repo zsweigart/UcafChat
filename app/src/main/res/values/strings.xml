@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">UACFChat</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_chat_list">ChatListActivity</string>
+    <string name="title_activity_friend_list">FriendListActivity</string>
+    <string name="title_activity_chat">ChatActivity</string>
+
+    <!-- General -->
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">CANCEL</string>
+
+    <!-- Login -->
+    <string name="login_action_sign_in">Sign in</string>
+    <string name="login_action_register">Register</string>
+    <string name="login_email_hint">Email Address</string>
+    <string name="login_password_hint">Password</string>
+
+    <!-- Register -->
+    <string name="register_prompt_email">Email</string>
+    <string name="register_prompt_password">Password</string>
+    <string name="register_error_invalid_email">This email address is invalid</string>
+    <string name="register_error_invalid_password">This password is too short</string>
+    <string name="registration_error_title">Registration Failed</string>
+
+    <!-- Chat List -->
+    <string name="chat_list_menu_item_my_messages">My Messages</string>
+    <string name="chat_list_menu_item_logout">Logout</string>
+
+    <!-- Chat -->
+    <string name="chat_menu_item_refresh">Refresh</string>
+    <string name="chat_failed_to_send">Message Not Sent.\nPress to try again.</string>
+
+    <!-- Friends List -->
+    <string name="add_friend_filter_hint">Search Friends</string>
+    <string name="add_friend_dialog_title">Add Friend</string>
+
+</resources>

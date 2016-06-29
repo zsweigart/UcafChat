@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="facebook_app_id">1631413743844286</string>
+    <string name="facebook_secret">4de1a5b9ac6231312b33020af74d9dca</string>
+
+    <string name="google_web_client_id">638673202430-o80915e872t8ja9m3gi6hsrnkg83h2rv.apps.googleusercontent.com</string>
+    <string name="google_web_client_secret">-FrZQXU05XEby1l7pSWJvABm</string>
+    <string name="google_android_key">AIzaSyD17OzAcEU2iSHOOOWX6VgnHvxaiSU1Up0</string>
+
+</resources>

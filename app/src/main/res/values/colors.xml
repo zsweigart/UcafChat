@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentDark">#F50057</color>
+
+    <color name="backgroundLightPrimary">#fff3f3f3</color>ff000000
+    <color name="backgroundDarkPrimary">#ff000000</color>
+
+    <color name="textDarkPrimary">#D9000000</color>
+    <color name="textDarkSecondary">#8C000000</color>
+    <color name="textDarkDisabled">#66000000</color>
+    <color name="textDarkHint">@color/textDarkDisabled</color>
+    <color name="dividerDark">#26000000</color>
+
+    <color name="textLightPrimary">#FFFFFFFF</color>
+    <color name="textLightSecondary">#B3FFFFFF</color>
+    <color name="textLightDisabled">#80FFFFFF</color>
+    <color name="textLightHint">@color/textLightDisabled</color>
+    <color name="dividerLight">#26FFFFFF</color>
+
+    <color name="error_color">#CC0000</color>
+
+    <color name="transparent_black_overlay">#80000000</color>
+
+    <color name="message_background">#80FF4081</color>
+</resources>

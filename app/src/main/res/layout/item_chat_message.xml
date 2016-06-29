@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/message_background"
+    android:padding="@dimen/default_material_padding_half"
+    android:layout_marginTop="@dimen/default_material_padding_half"
+    android:layout_marginBottom="@dimen/default_material_padding_half">
+
+    <TextView
+        android:id="@+id/list_item_chat_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textDarkPrimary"
+        android:textSize="@dimen/subhead"
+        tools:text="Hello! This is a test message"/>
+
+    <TextView
+        android:id="@+id/list_item_chat_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="@dimen/caption"
+        android:layout_gravity="right"
+        android:textColor="@color/error_color"
+        android:visibility="gone"
+        android:text="@string/chat_failed_to_send"
+        tools:visibility="visible"/>
+
+</LinearLayout>
