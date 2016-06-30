@@ -5,6 +5,8 @@ import com.zacharysweigart.ucafchatmanager.model.Message;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+import static org.mockito.Mockito.verify;
 
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -21,6 +23,8 @@ public class UacfConnectionTest {
     public void setup() {
         message = new Message(userName, messageText);
         uacfConnection = new UacfConnection();
+        uacfConnection.uacfApi = Mockito.mock(UacfApi.class);
+        message = Mockito.mock(Message.class);
     }
 
     @Test
@@ -35,5 +39,17 @@ public class UacfConnectionTest {
         UacfChatManager.setLoggingEnabled(true);
         uacfConnection = new UacfConnection();
         assertThat(uacfConnection.interceptor.getLevel(), equalTo(HttpLoggingInterceptor.Level.BODY));
+    }
+
+    @Test
+    public void getMessages_whenGivenUsername_callsApi() {
+        uacfConnection.getMessages(userName);
+        verify(uacfConnection.uacfApi).getMessages(userName);
+    }
+
+    @Test
+    public void sendMessage_whenGivenMessage_callsApi() {
+        uacfConnection.postMessage(message);
+        verify(uacfConnection.uacfApi).sendMessage(message);
     }
 }

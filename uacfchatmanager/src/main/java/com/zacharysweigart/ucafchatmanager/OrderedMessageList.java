@@ -1,6 +1,8 @@
 package com.zacharysweigart.ucafchatmanager;
 
 
+import android.support.annotation.VisibleForTesting;
+
 import com.zacharysweigart.ucafchatmanager.model.Message;
 
 import java.util.ArrayList;
@@ -8,7 +10,8 @@ import java.util.List;
 
 class OrderedMessageList {
 
-    private List<Message> messageList;
+    @VisibleForTesting
+    List<Message> messageList;
     private MessageListListener messageListListener;
 
     public OrderedMessageList() {
@@ -19,8 +22,8 @@ class OrderedMessageList {
         this.messageListListener = messageListListener;
     }
 
-    public void addMessage(int position, Message message) {
-        messageList.add(position, message);
+    public void addMessage(Message message) {
+        messageList.add(0, message);
     }
 
     /**
@@ -47,7 +50,9 @@ class OrderedMessageList {
         for (Message message : messageList) {
             if (!newMessageList.contains(message)) {
                 messagesToRemove.add(message);
-                messageListListener.messageRemoved(message);
+                if (messageListListener != null) {
+                    messageListListener.messageRemoved(message);
+                }
             }
         }
         messageList.removeAll(messagesToRemove);
@@ -55,7 +60,9 @@ class OrderedMessageList {
         for (Message message : newMessageList) {
             if (!messageList.contains(message)) {
                 messagesToAdd.add(message);
-                messageListListener.messageAdded(message);
+                if (messageListListener != null) {
+                    messageListListener.messageAdded(message);
+                }
             }
         }
         messageList.addAll(messagesToAdd);

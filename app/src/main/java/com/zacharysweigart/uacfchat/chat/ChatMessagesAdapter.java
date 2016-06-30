@@ -2,6 +2,7 @@ package com.zacharysweigart.uacfchat.chat;
 
 
 import android.content.Context;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -21,8 +22,9 @@ import butterknife.ButterKnife;
 
 public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapter.ChatMessagesViewHolder> {
 
+    @VisibleForTesting
+    List<Message> messageList;
     private ChatPresenter chatPresenter;
-    private List<Message> messageList;
 
     public ChatMessagesAdapter(ChatPresenter chatPresenter) {
         this.chatPresenter = chatPresenter;
@@ -82,6 +84,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         TextView chatMessage;
         @BindView(R.id.list_item_chat_error)
         TextView chatError;
+        View itemView;
 
         private Context context;
         private Message message;
@@ -89,7 +92,9 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
 
         public ChatMessagesViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             this.context = itemView.getContext();
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
         }
 
@@ -98,9 +103,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
             this.chatPresenter = chatPresenter;
 
             chatMessage.setText(message.getText());
-            int textColor = !TextUtils.isEmpty(message.getId()) ? ContextCompat.getColor(context, R.color.textDarkPrimary) :
-                    ContextCompat.getColor(context, R.color.textDarkSecondary);
-            chatMessage.setTextColor(textColor);
+            chatMessage.setTextColor(getTextColor());
 
             if(message.hasError()) {
                 showSendError();
@@ -110,12 +113,12 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
         }
 
         public void showSendError() {
-            chatMessage.setTextColor(ContextCompat.getColor(context, R.color.textDarkHint));
+            chatMessage.setTextColor(ContextCompat.getColor(context, R.color.textDarkSecondary));
             chatError.setVisibility(View.VISIBLE);
         }
 
         public void hideSendError() {
-            chatMessage.setTextColor(ContextCompat.getColor(context, R.color.textDarkPrimary));
+            chatMessage.setTextColor(getTextColor());
             chatError.setVisibility(View.GONE);
         }
 
@@ -124,6 +127,11 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
             if(message.hasError()) {
                 chatPresenter.resendMessage(message);
             }
+        }
+
+        private int getTextColor() {
+            return !TextUtils.isEmpty(message.getId()) ? ContextCompat.getColor(context, R.color.textDarkPrimary) :
+                    ContextCompat.getColor(context, R.color.textDarkSecondary);
         }
     }
 }

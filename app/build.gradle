@@ -32,7 +32,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':uacfchatmanager')
-    testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
@@ -46,6 +45,15 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+
+    testCompile('org.robolectric:robolectric:3.0') {
+        exclude group: 'com.android.support'
+        exclude group: 'junit'
+    }
+    testCompile "org.robolectric:shadows-multidex:3.0"
+    testCompile "org.robolectric:shadows-support-v4:3.0"
+    testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-all:1.9.5"
 }
 
 apply plugin: 'com.google.gms.google-services'

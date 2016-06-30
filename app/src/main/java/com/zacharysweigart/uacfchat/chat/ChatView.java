@@ -45,7 +45,7 @@ public class ChatView extends RelativeLayout {
     }
 
     public void messageRefreshFailure() {
-
+        //TODO Show error
     }
 
     public void messageSent(Message message) {

@@ -71,6 +71,7 @@ public class ChatPresenter {
     }
 
     public void resendMessage(Message message) {
+        message.setError(null);
         uacfChat.sendMessage(message);
     }
 }

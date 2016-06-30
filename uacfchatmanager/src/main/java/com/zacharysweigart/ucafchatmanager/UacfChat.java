@@ -48,7 +48,7 @@ public class UacfChat {
     }
 
     public void sendMessage(final Message message) {
-        orderedMessageList.addMessage(0, message);
+        orderedMessageList.addMessage(message);
         uacfConnection.postMessage(message).enqueue(new Callback<Message>() {
             @Override
             public void onResponse(Call<Message> call, Response<Message> response) {
