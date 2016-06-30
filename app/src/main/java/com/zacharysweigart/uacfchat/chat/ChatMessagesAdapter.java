@@ -46,7 +46,7 @@ public class ChatMessagesAdapter extends RecyclerView.Adapter<ChatMessagesAdapte
     }
 
     public void addMessage(Message message) {
-        addMessage(messageList.size()-1, message);
+        addMessage(0, message);
     }
 
     public void addMessage(int position, Message message) {

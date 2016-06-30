@@ -57,7 +57,7 @@ public class ChatListActivity extends BaseActivity implements ChatListNavigator 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.chat_list_menu_my_messages:
-                openChatActivity(new Chat(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+                openChatActivity(new Chat(FirebaseAuth.getInstance().getCurrentUser().getEmail()));
                 return true;
             case R.id.chat_list_logout:
                 logout();
