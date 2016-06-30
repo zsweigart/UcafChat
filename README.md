@@ -31,6 +31,9 @@ The UacfChatManager provides two methods for creating a chat, one which takes th
 
 `UacfChatManager.getChat("Thomas")`
 
+### Starting and Stopping a Chat
+Due to the activity/fragment lifecycle it is recommended that you call start chat in your onStart method and stopChat in your onStop method.  startChat will allow the chat to call your listeners (see below) which will update your UI, while stopChat will allow the calls to complete but will not call your listeners so you can be assured that you will not try to update the UI if it does not exist.
+
 ### Sending Messages
 Sending messages is done through the UacfChat class' send message method which takes a message object as a parameter.  If you call this method it will post the message. 
 
